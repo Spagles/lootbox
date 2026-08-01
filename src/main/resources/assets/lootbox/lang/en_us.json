@@ -1,0 +1,21 @@
+{
+  "item.lootbox.loot_box": "Loot Box",
+  "block.lootbox.loot_box_opener": "Automatic Loot Box Opener",
+  "itemGroup.lootbox.loot_boxes": "Loot Boxes",
+  "message.lootbox.loot_box_no_reward": "No reward is available for the current conditions",
+  "message.lootbox.loot_box_opened": "Loot box opened",
+  "tooltip.lootbox.loot_box_unknown": "Unloaded loot box definition",
+  "tooltip.lootbox.loot_box_rolls": "Rolls: %s",
+  "tooltip.lootbox.shift_for_details": "Hold Shift for detailed rewards",
+  "tooltip.lootbox.probability": "Chance: %s",
+  "commands.lootbox.unknown_box": "Unknown loot box: %s",
+  "commands.lootbox.give": "Gave %s %s to %s",
+  "jei.lootbox.loot_box": "Loot Box Rewards",
+  "jei.lootbox.loot_box_hint": "Current luck: %s; hover rewards for details",
+  "jei.lootbox.quantity": "Quantity: %s",
+  "jei.lootbox.weight": "Base weight: %s",
+  "jei.lootbox.luck_weight": "Luck weight: %s",
+  "jei.lootbox.final_probability": "Final chance: %s",
+  "jei.lootbox.condition": "Condition: %s",
+  "jei.lootbox.condition.none": "None"
+}
