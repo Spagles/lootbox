@@ -71,18 +71,33 @@ public final class LootBoxApi {
         ResourceLocation id = ResourceLocation.parse(itemId);
         var item = BuiltInRegistries.ITEM.get(id);
         if (item == Items.AIR) item = Items.BARRIER;
-        LootBoxCondition condition = conditionId == null || conditionId.isBlank()
-                ? LootBoxApi.condition("always") : LootBoxApi.condition(conditionId);
-        if (condition == null) condition = context -> false;
+        LootBoxCondition condition = resolveCondition(conditionId, conditionText);
         return new LootBoxDefinition.Entry(new ItemStack(item), min, max, weight, luckWeight, condition, conditionText);
     }
 
     public static LootBoxDefinition.Entry entry(ItemStack stack, int min, int max, double weight,
                                                  double luckWeight, String conditionId, String conditionText) {
+        LootBoxCondition condition = resolveCondition(conditionId, conditionText);
+        return new LootBoxDefinition.Entry(stack.copy(), min, max, weight, luckWeight, condition, conditionText);
+    }
+
+    private static LootBoxCondition resolveCondition(String conditionId, String conditionText) {
+        if ("luck".equals(conditionId)) {
+            float minLuck = 0.0F;
+            if (conditionText != null && conditionText.startsWith("幸运 ≥ ")) {
+                try {
+                    minLuck = Float.parseFloat(conditionText.substring("幸运 ≥ ".length()).trim());
+                } catch (NumberFormatException ignored) {}
+            }
+            float finalMinLuck = minLuck;
+            return new LootBoxCondition() {
+                @Override public boolean test(LootBoxContext context) { return context.luck() >= finalMinLuck; }
+                @Override public String description(LootBoxContext context) { return "幸运 ≥ " + finalMinLuck; }
+            };
+        }
         LootBoxCondition condition = conditionId == null || conditionId.isBlank()
                 ? LootBoxApi.condition("always") : LootBoxApi.condition(conditionId);
-        if (condition == null) condition = context -> false;
-        return new LootBoxDefinition.Entry(stack.copy(), min, max, weight, luckWeight, condition, conditionText);
+        return condition != null ? condition : context -> false;
     }
 
     public static List<LootBoxDefinition.Entry> entries(LootBoxDefinition.Entry... entries) {
