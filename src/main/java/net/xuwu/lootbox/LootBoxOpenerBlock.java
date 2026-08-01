@@ -36,7 +36,10 @@ public class LootBoxOpenerBlock extends BaseEntityBlock {
         if (!(level.getBlockEntity(pos) instanceof LootBoxOpenerBlockEntity opener)) {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
-        if (!level.isClientSide() && stack.getItem() instanceof LootBoxItem) {
+        if (stack.getItem() instanceof LootBoxItem) {
+            if (level.isClientSide()) {
+                return ItemInteractionResult.SUCCESS;
+            }
             if (opener.insertInput(stack)) {
                 return ItemInteractionResult.SUCCESS;
             }
